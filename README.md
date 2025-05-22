@@ -1,73 +1,128 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+# 基于 NestJS 的 DevOps 自动化平台项目
 
-## Description
+说起来有点标题党了，哈哈，说是这么说，其实目前只做了自建 CI/CD 流程的一部分（自定义轻量构建平台），后续暂时没打算继续做，目前够用就行。😄
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+而且只是部分开源了一下，前端代码没有发，只有Nest代码，另外改了一些配置，搞不好跑不起来，可能会报错。
 
-## Installation
+## 项目简介
+
+本项目是一个基于 NestJS 框架开发的 DevOps 自动化平台，旨在为前端/后端项目提供一站式的持续集成与交付（CI/CD）解决方案。平台集成了代码管理、构建、发布、队列调度、等核心能力，支持多用户协作和流程自动化。
+
+**该项目充分利用了多线程，多进程，以及任务调度等来执行脚本，保证脚本和服务的稳定运行。**
+
+
+### **构建阶段（Build）**
+-   **自定义脚本执行**：
+    允许用户编写任意构建脚本（如 npm run build、go build、make 等），执行逻辑灵活可配置。
+-   **打包产物生成**：
+    自动执行打包逻辑，产出二进制或前端资源包，为部署准备完整构建产物。
+
+### **产物管理（Artifact Management）**
+
+-   **构建结果归档**：
+
+    生成的文件支持查看、归档、下载，便于传递给部署阶段或其他服务。
+
+-   **多版本管理**：
+
+    支持不同构建版本的查看和管理，可对构建记录做历史追踪。
+### **日志追踪（Logging & Auditing）**
+
+-   **构建日志可视化**：
+
+    支持构建过程中实时日志查看、错误回溯，方便调试。
+
+### **工作流编排（Pipeline / Workflow）**
+
+-   **任务流支持**：
+
+    提供「构建 → 处理 → 存档」的基本工作流能力
+## 技术栈
+
+- **后端框架**：NestJS（TypeScript）  
+- **数据库**：MySQL，TypeORM  
+- **任务调度**：[@nestjs/schedule](https://www.npmjs.com/package/@nestjs/schedule)  
+- **队列与多线程**：[poolifier](https://www.npmjs.com/package/poolifier)  
+- **日志系统**：log4js  
+- **认证与权限**：JWT + Passport  
+- **容器化**：Docker  
+- **静态资源管理**：支持静态文件上传与自动推送  
+
+## 目录结构
+
+项目结构清晰，便于扩展和维护：
+```
+src/
+├── auth/             # 认证与权限模块
+├── build/            # 构建与版本管理模块
+├── deployment/       # 容器化与部署模块
+├── file/             # 文件与静态资源管理
+├── queue/            # 队列与任务调度
+├── user/             # 用户管理模块
+├── workflow/         # 自定义工作流模块
+├── common/           # 公共模块
+└── main.ts           # 项目入口
+```
+## 主要功能
+
+### 1. 用户认证与权限管理
+
+- 支持用户注册、登录，基于 JWT 进行接口权限校验  
+
+
+### 2. 版本与构建管理
+
+- 支持多项目多版本管理，自动拉取代码分支（支持 GitLab/GitHub）  
+- 构建流程可配置，支持自定义脚本、环境变量、分支等参数  
+- 构建日志实时记录，支持日志下载与查看
+
+### 3. 工作流与队列调度
+
+- 支持自定义工作流（WorkFlow），可视化流程配置  
+- 构建任务自动进入队列，支持并发与串行调度  
+- 队列任务支持暂停、终止、失败重试等操作
+
+### 4. 文件与静态资源管理
+
+- 支持多文件上传、自动归档、静态资源自动推送到指定目录  
+- 文件操作自动触发代码推送，便于前端资源自动化部署
+
+### 5. 容器化与部署
+
+- 提供完善的 Dockerfile，支持一键容器化部署  
+- 支持 PM2 进程管理，日志分级输出，便于生产环境运维
+
+## 亮点与特色
+
+- **高扩展性**：采用模块化设计，业务功能解耦，便于二次开发  
+- **自动化流程**：集成队列与多线程池，支持高并发任务调度  
+- **安全性**：全局异常处理、数据拦截、权限校验，保障系统稳定安全  
+- **易用性**：Swagger 自动生成 API 文档，接口调试方便  
+- **运维友好**：日志系统完善，支持 PM2、Docker 等主流运维工具  
+
+## 启动与使用
+
+### 安装依赖
 
 ```bash
-$ npm install
+npm install
+
+启动开发环境
+
+npm run dev
+
+生产环境构建与部署
+
+bash build.sh
+
+docker 镜像打包
+
+npm run build:image ops-cd:1.0.2
+
+访问 Swagger API 文档
 ```
+访问地址：
 
-## Running the app
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+http://localhost:3000/api
