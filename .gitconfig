@@ -1,0 +1,6 @@
+[credential]
+        helper = store
+[user]
+        name = name
+        password = password
+        email = email

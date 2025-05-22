@@ -1,0 +1,64 @@
+// .vscode/launch.json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "开发环境dev",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceRoot}",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "start:debug"],
+      "console": "integratedTerminal",
+      "autoAttachChildProcesses": true,
+      "env": {
+        "NODE_ENV": "development" // 环境参数，当前指定为生产环境--production/development
+      }
+    },
+    {
+      "name": "windows开发环境dev",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceRoot}",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev:win"],
+      "console": "integratedTerminal",
+      "autoAttachChildProcesses": true,
+      "env": {
+        "NODE_ENV": "development", // 环境参数，当前指定为生产环境--production/development
+        "PORT": "7001",
+        "YXT_SERVER_ENV": "dev" // 请求的服务器环境 dev/feature/production
+      }
+    },
+    {
+      "name": "stable环境",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceRoot}",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "stg"],
+      "console": "integratedTerminal",
+      "autoAttachChildProcesses": true,
+      "env": {
+        "NODE_ENV": "development", // 环境参数，当前指定为生产环境--production/development
+        "PORT": "7001",
+        "YXT_SERVER_ENV": "stg" // 请求的服务器环境 dev/feature/production
+      }
+    },
+    {
+      "name": "开发环境tcprod",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceRoot}",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "prod"],
+      "console": "integratedTerminal",
+      "autoAttachChildProcesses": true,
+      "env": {
+        "NODE_ENV": "development", // 环境参数，当前指定为生产环境--production/development
+        "PORT": "7001",
+        "YXT_SERVER_ENV": "prod" // 请求的服务器环境 dev/feature/production
+      }
+    }
+  ]
+}
